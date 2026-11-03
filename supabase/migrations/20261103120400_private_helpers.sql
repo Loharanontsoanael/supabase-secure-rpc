@@ -21,7 +21,8 @@ $$;
 
 comment on function private.is_admin(uuid) is
   'SECURITY DEFINER: reads public.user_roles as the function owner, so RLS on user_roles is not applied inside it. '
-  'This is what avoids "infinite recursion detected in policy" when the user_roles policy itself asks whether the caller is an admin. '
+  'The user_roles policy calls this function; as SECURITY INVOKER the lookup would re-enter that same policy, and whether '
+  'that ends in "infinite recursion detected in policy" would depend on the query plan. Definer rights remove the cycle. '
   'Returns a boolean only and lives in the unexposed private schema.';
 
 revoke all on function private.is_admin(uuid) from public, anon;
