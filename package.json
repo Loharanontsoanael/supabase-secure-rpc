@@ -1,0 +1,28 @@
+{
+  "name": "supabase-secure-rpc",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Securing a Supabase/PostgreSQL backend with RLS and SECURITY DEFINER functions, with tests that prove the access rules.",
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "env:local": "supabase status -o env --override-name api.url=SUPABASE_URL --override-name auth.publishable_key=SUPABASE_PUBLISHABLE_KEY | grep -E '^SUPABASE_(URL|PUBLISHABLE_KEY)=' > .env",
+    "types:gen": "supabase gen types typescript --schema public > src/database.types.ts && prettier --write --log-level warn src/database.types.ts",
+    "typecheck": "tsc --noEmit",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "2.118.0"
+  },
+  "devDependencies": {
+    "@types/node": "26.6.6",
+    "prettier": "3.9.10",
+    "typescript": "7.0.2",
+    "vitest": "5.1.0"
+  }
+}
